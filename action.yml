@@ -1,0 +1,14 @@
+name: 'Annotated unit tests'
+description: 'Runs unit tests and annotates failures'
+
+inputs:
+  test-type:
+    description: 'The tool used to run tests'
+    required: true
+  token:
+    description: 'Github token'
+    required: true
+
+runs:
+  using: 'node12'
+  main: 'src/main.js'
