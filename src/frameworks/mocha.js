@@ -10,7 +10,7 @@ class Mocha {
 		command = command.replace('mocha', 'mocha -R json');
 
 		// Add `| tee` to output stdout to a file
-		return `/bin/bash -c "${command} | tee ${fileOutput}"`;
+		return `/bin/bash -c "npx ${command} | tee ${fileOutput}"`;
 	}
 
 	static parseTestResult(fileOutput) {
