@@ -34,6 +34,7 @@ jobs:
       with:
         repository: Brightspace/unit-test-action
         path: .github/actions/unit-test-action
+        token: ${{ secrets.D2L_GITHUB_TOKEN }}
     - uses: ./.github/actions/unit-test-action
       with:
         test-type: <mocha>
