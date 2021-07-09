@@ -34,7 +34,22 @@ function extractJSON(str) {
 	} while (firstOpen !== -1);
 }
 
+function getTestCommand() {
+	const packageConfig = JSON.parse(readFile('package.json'));
+
+	const command = packageConfig.scripts.test.split(' ');
+
+	while (command.includes('npm')) {
+		const startIndex = command.indexOf('npm');
+		const endIndex = command[startIndex + 1] === 'run' ? startIndex + 2 : startIndex + 1;
+		command.splice(startIndex, endIndex - startIndex + 1, ...packageConfig.scripts[command[endIndex]].split(' '));
+	}
+
+	return command.join(' ');
+}
+
 module.exports = {
 	readFile,
-	extractJSON
+	extractJSON,
+	getTestCommand
 };
