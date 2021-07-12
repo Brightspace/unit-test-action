@@ -41,6 +41,8 @@ function getTestCommand(originalCommand) {
 
 	command = parseSequentialCommand(command);
 
+	command = command.join(' ').replaceAll('npm', 'npx npm').split(' ');
+
 	while (command.includes('npm')) {
 		const startIndex = command.indexOf('npm');
 		const endIndex = command[startIndex + 1] === 'run' ? startIndex + 2 : startIndex + 1;
@@ -56,7 +58,7 @@ function parseSequentialCommand(command) {
 
 		command.forEach(script => {
 			if (script !== 'run-s' && !script.startsWith('-')) {
-				seqCommands.push(`npx npm run ${script}`);
+				seqCommands.push(`npm run ${script}`);
 			}
 		});
 
