@@ -6,7 +6,19 @@ function readFile(file) {
 	return fs.readFileSync(file, 'utf8');
 }
 
-function extractJSON(str) {
+function hasProperties(obj, properties) {
+	let hasProperty = true;
+
+	properties.forEach(property => {
+		if (!(property in obj)) {
+			hasProperty = false;
+		}
+	});
+
+	return hasProperty;
+}
+
+function extractJSON(str, properties = []) {
 	let firstOpen, firstClose, candidate;
 	firstOpen = str.indexOf('{');
 
@@ -23,7 +35,9 @@ function extractJSON(str) {
 			try {
 				var res = JSON.parse(candidate);
 
-				return res;
+				if (hasProperties(res, properties)) {
+					return res;
+				}
 			}
 			catch (ignore) { /*ignore*/ }
 
@@ -41,7 +55,13 @@ function getTestCommand(originalCommand) {
 
 	command = parseSequentialCommand(command);
 
-	command = command.join(' ').replaceAll('npm', 'npx npm').split(' ');
+	command.unshift('npx');
+
+	for (let i = 0; i < command.length; i++) {
+		if (command[i] === '&&') {
+			command.splice(i + 1, 0, 'npx');
+		}
+	}
 
 	while (command.includes('npm')) {
 		const startIndex = command.indexOf('npm');

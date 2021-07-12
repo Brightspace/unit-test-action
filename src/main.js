@@ -26,6 +26,8 @@ async function main() {
 
 		if (annotations.annotations.length > 0) {
 			await Checks.writeAnnotations(annotations);
+
+			core.setFailed(`${annotations.annotations.length} Tests failed`);
 		}
 	} catch (error) {
 		console.error(error);
