@@ -12,10 +12,11 @@ const FILE_OUTPUT = 'output.json';
 async function main() {
 	try {
 		const testType = core.getInput('test-type');
+		const testScript = core.getInput('test-script');
 
 		const framework = TestFrameworkFactory.getTestFramework(testType);
 
-		let testCommand = getTestCommand();
+		let testCommand = getTestCommand(testScript);
 
 		testCommand = framework.updateTestCommand(testCommand, FILE_OUTPUT);
 

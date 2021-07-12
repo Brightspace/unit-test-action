@@ -34,10 +34,10 @@ function extractJSON(str) {
 	} while (firstOpen !== -1);
 }
 
-function getTestCommand() {
+function getTestCommand(originalCommand) {
 	const packageConfig = JSON.parse(readFile('package.json'));
 
-	const command = packageConfig.scripts.test.split(' ');
+	const command = packageConfig.scripts[originalCommand].split(' ');
 
 	while (command.includes('npm')) {
 		const startIndex = command.indexOf('npm');
