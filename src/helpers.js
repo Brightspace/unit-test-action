@@ -37,7 +37,9 @@ function extractJSON(str) {
 function getTestCommand(originalCommand) {
 	const packageConfig = JSON.parse(readFile('package.json'));
 
-	const command = packageConfig.scripts[originalCommand].split(' ');
+	let command = packageConfig.scripts[originalCommand].split(' ');
+
+	command = parseSequentialCommand(command);
 
 	while (command.includes('npm')) {
 		const startIndex = command.indexOf('npm');
@@ -46,6 +48,22 @@ function getTestCommand(originalCommand) {
 	}
 
 	return command.join(' ');
+}
+
+function parseSequentialCommand(command) {
+	if (command[0] === 'run-s') {
+		const seqCommands = [];
+
+		command.forEach(script => {
+			if (script !== 'run-s' && !script.startsWith('-')) {
+				seqCommands.push(`npm run ${script}`);
+			}
+		});
+
+		return seqCommands.join(' && ').split(' ');
+	}
+
+	return command;
 }
 
 module.exports = {
