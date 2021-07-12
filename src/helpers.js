@@ -56,7 +56,7 @@ function parseSequentialCommand(command) {
 
 		command.forEach(script => {
 			if (script !== 'run-s' && !script.startsWith('-')) {
-				seqCommands.push(`npm run ${script}`);
+				seqCommands.push(`npx npm run ${script}`);
 			}
 		});
 
