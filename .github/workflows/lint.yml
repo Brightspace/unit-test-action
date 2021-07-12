@@ -3,7 +3,7 @@ on: pull_request
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, Linux, AWS]
     steps:
       - name: Checkout Code
         uses: Brightspace/third-party-actions@actions/checkout
