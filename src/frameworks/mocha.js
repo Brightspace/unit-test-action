@@ -14,7 +14,7 @@ class Mocha {
 	}
 
 	static parseTestResult(fileOutput) {
-		const output = extractJSON(readFile(fileOutput));
+		const output = extractJSON(readFile(fileOutput), ['stats', 'test', 'pending', 'failures', 'passes']);
 
 		const annotations = new Annotations({
 			numErrors: output ? output.failures.length : 0

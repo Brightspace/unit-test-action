@@ -6,7 +6,19 @@ function readFile(file) {
 	return fs.readFileSync(file, 'utf8');
 }
 
-function extractJSON(str) {
+function hasProperties(obj, properties) {
+	let hasProperty = true;
+
+	properties.forEach(property => {
+		if (!(property in obj)) {
+			hasProperty = false;
+		}
+	});
+
+	return hasProperty;
+}
+
+function extractJSON(str, properties = []) {
 	let firstOpen, firstClose, candidate;
 	firstOpen = str.indexOf('{');
 
@@ -23,7 +35,9 @@ function extractJSON(str) {
 			try {
 				var res = JSON.parse(candidate);
 
-				return res;
+				if (hasProperties(res, properties)) {
+					return res;
+				}
 			}
 			catch (ignore) { /*ignore*/ }
 
