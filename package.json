@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "eslint": "^7.3.1",
-    "eslint-config-brightspace": "^0.9.0"
+    "eslint-config-brightspace": "^0.9.0",
+    "karma-json-reporter": "^1.1"
   }
 }
