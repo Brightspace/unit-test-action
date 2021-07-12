@@ -10,7 +10,7 @@ class Mocha {
 		command = command.replace('mocha', 'mocha -R json');
 
 		// Add `| tee` to output stdout to a file
-		return `/bin/bash -c "npx ${command} | tee ${fileOutput}"`;
+		return `/bin/bash -c "${command} | tee ${fileOutput}"`;
 	}
 
 	static parseTestResult(fileOutput) {
@@ -22,11 +22,13 @@ class Mocha {
 
 		if (output) {
 			output.failures.forEach(failure => {
+				const fileName = failure.file.substring(process.env.GITHUB_WORKSPACE.length + 1, failure.file.length);
+
 				annotations.annotations.push(new Annotation({
 					title: failure.fullTitle,
 					message: `${failure.err.message}\n\n${failure.err.stack}`,
-					path: failure.file.substring(process.env.GITHUB_WORKSPACE.length + 1, failure.file.length),
-					line: this._getLineNumber(failure.err.stack, failure.file)
+					path: fileName,
+					line: this._getLineNumber(failure.err.stack, fileName)
 				}));
 			});
 		}
