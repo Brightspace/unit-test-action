@@ -5,6 +5,10 @@ inputs:
   test-type:
     description: 'The tool used to run tests'
     required: true
+  test-script:
+    description: 'Npm script used to run the unit tests. (default to test)'
+    required: false
+    default: 'test'
   token:
     description: 'Github token'
     required: true

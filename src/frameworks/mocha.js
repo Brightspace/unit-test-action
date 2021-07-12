@@ -5,13 +5,12 @@ const { Annotations } = require('../annotations');
 const { Annotation } = require('../annotation');
 
 class Mocha {
-	static getTestCommand(fileOutput) {
-		// `/bin/bash -c` is needed to use the pipe
-		// `-silent` removes the npm stdout text
-		// `--` allows us to add arguments to the command scripted for npm test
-		// `-R json` selects the json reporter for mocha to facilitate parsing
-		// `| tee` writes the stdout to a file
-		return `/bin/bash -c "npm run test -silent -- -R json | tee ${fileOutput}"`;
+	static updateTestCommand(command, fileOutput) {
+		// Add `-R json` to format result as a json
+		command = command.replace('mocha', 'mocha -R json');
+
+		// Add `| tee` to output stdout to a file
+		return `/bin/bash -c "npx ${command} | tee ${fileOutput}"`;
 	}
 
 	static parseTestResult(fileOutput) {

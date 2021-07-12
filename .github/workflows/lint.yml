@@ -1,0 +1,19 @@
+name: lint
+on: pull_request
+
+jobs:
+  lint:
+    runs-on: [self-hosted, Linux, AWS]
+    steps:
+      - name: Checkout Code
+        uses: Brightspace/third-party-actions@actions/checkout
+      - name: Setup Node
+        uses: Brightspace/third-party-actions@actions/setup-node
+        with:
+            node-version: '14.x'
+            registry-url: ${{ secrets.ARTIFACTORY_NPM_REGISTRY }}
+            scope: '@d2l'
+      - name: Install Node Modules
+        run: npm ci
+      - name: Run lint
+        run: npm run lint
