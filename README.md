@@ -14,8 +14,8 @@ Add a workflow file to your repository using the following template.
 
 ### Replacements
 
-- `<Linux|Windows>`: the operating system which matches your build requirements
-- `<mocha>`: currently we only support mocha
+- `<Linux|Windows>`: The operating system which matches your build requirements
+- `<mocha>`: Currently we only support mocha
 - `<npm script command>`: The npm script to run, without the `npm run`. (Defaults to `test`)
 
 ```
