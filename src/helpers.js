@@ -41,6 +41,8 @@ function getTestCommand(originalCommand) {
 
 	command = parseSequentialCommand(command);
 
+	console.log(command);
+
 	command = command.join(' ').replaceAll('npm', 'npx npm').split(' ');
 
 	while (command.includes('npm')) {
