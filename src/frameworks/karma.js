@@ -34,7 +34,7 @@ class Karma {
 
 						annotations.annotations.push(new Annotation({
 							title: result.description,
-							message: `${result.suite.join('.')}: ${result.description} failed (${output.browsers[id].name})`,
+							message: `${result.suite.join('.')}: ${result.description} failed (${output.browsers[id].name}):${result.log.join('\n')}`,
 							path,
 							line
 						}));
