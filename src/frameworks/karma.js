@@ -2,7 +2,9 @@
 
 const { readFile, extractJSON } = require('../helpers');
 const { Annotations } = require('../annotations');
-// const { Annotation } = require('../annotation');
+const { Annotation } = require('../annotation');
+
+const EXPECTED_ARGUMENTS = ['browsers', 'result', 'summary'];
 
 class Karma {
 	static updateTestCommand(command, fileOutput) {
@@ -14,27 +16,54 @@ class Karma {
 	}
 
 	static parseTestResult(fileOutput) {
-		const output = extractJSON(readFile(fileOutput));
-		console.log(output);
+		const output = extractJSON(readFile(fileOutput), EXPECTED_ARGUMENTS);
 
 		const annotations = new Annotations({
 			numErrors: 0
 		});
 
-		// if (output) {
-		// 	output.failures.forEach(failure => {
-		// 		const fileName = failure.file.substring(process.env.GITHUB_WORKSPACE.length + 1, failure.file.length);
+		if (output && output.summary.failed > 0) {
 
-		// 		annotations.annotations.push(new Annotation({
-		// 			title: failure.fullTitle,
-		// 			message: `${failure.err.message}\n\n${failure.err.stack}`,
-		// 			path: fileName,
-		// 			line: this._getLineNumber(failure.err.stack, fileName)
-		// 		}));
-		// 	});
-		// }
+			for (const [id, results] of Object.entries(output.result)) {
+
+				results.forEach(result => {
+
+					if (!result.success) {
+						const logs = result.log.join('\n');
+						const { path, line } = Karma.getFileInfo(logs);
+
+						annotations.annotations.push(new Annotation({
+							title: result.description,
+							message: `${result.suite.join('.')}: ${result.description} failed (${output.browsers[id].name}):\n\n${result.log.join('\n')}`,
+							path,
+							line
+						}));
+					}
+				});
+			}
+		}
 
 		return annotations;
+	}
+
+	static getFileInfo(stack) {
+
+		// Matching on: `base/{filePath}:{lineNumber}:{columNumber}`
+		const matches = stack.match(/base\/.+\.test\.js.*\:\d+\:\d+/g);
+
+		if (matches && matches.length === 1) {
+			const match = matches[0];
+
+			// Using lookbehind (?<=foo) and lookahead (?=foo) to get file path and line number
+			return {
+				path: match.match(/(?<=base\/).+\.test\.js/g)[0],
+				line: parseInt(match.match(/(?<=\.test\.js.*\:)\d+/g)[0])
+			};
+		}
+		return {
+			path: '',
+			line: 1
+		};
 	}
 }
 
