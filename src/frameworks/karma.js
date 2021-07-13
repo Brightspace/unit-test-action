@@ -36,7 +36,7 @@ class Karma {
 
 						annotations.annotations.push(new Annotation({
 							title,
-							message: message.replaceAll('"', "'"),
+							message: message.replace(/"/g, "'"),
 							path,
 							line
 						}));
