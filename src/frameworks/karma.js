@@ -32,11 +32,10 @@ class Karma {
 						const logs = result.log.join('\n');
 						const { path, line } = Karma.getFileInfo(logs);
 						const title = `${result.description} (${output.browsers[id].name})`;
-						const message = `${result.suite.join('.')}: ${title}:\n\n${result.log.join('\n')}`;
 
 						annotations.annotations.push(new Annotation({
 							title,
-							message: message.replace(/"/g, "'"),
+							message: `${result.suite.join('.')}: ${title}:\n\n${result.log.join('\n')}`,
 							path,
 							line
 						}));
@@ -63,7 +62,7 @@ class Karma {
 			};
 		}
 		return {
-			path: '',
+			path: '.',
 			line: 1
 		};
 	}
