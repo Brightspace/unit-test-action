@@ -1,9 +1,11 @@
 'use strict';
 
 const { Mocha } = require('./frameworks/mocha');
+const { Karma } = require('./frameworks/karma');
 
 const frameworks = {
-	'mocha': Mocha
+	'mocha': Mocha,
+	'karma': Karma
 };
 
 class TestFrameworkFactory {

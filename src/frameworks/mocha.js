@@ -4,7 +4,10 @@ const { readFile, extractJSON } = require('../helpers');
 const { Annotations } = require('../annotations');
 const { Annotation } = require('../annotation');
 
+const EXPECTED_ARGUMENTS = ['stats', 'test', 'pending', 'failures', 'passes'];
+
 class Mocha {
+
 	static updateTestCommand(command, fileOutput) {
 		// Add `-R json` to format result as a json
 		command = command.replace('mocha', 'mocha -R json');
@@ -14,7 +17,7 @@ class Mocha {
 	}
 
 	static parseTestResult(fileOutput) {
-		const output = extractJSON(readFile(fileOutput), ['stats', 'test', 'pending', 'failures', 'passes']);
+		const output = extractJSON(readFile(fileOutput), EXPECTED_ARGUMENTS);
 
 		const annotations = new Annotations({
 			numErrors: output ? output.failures.length : 0
