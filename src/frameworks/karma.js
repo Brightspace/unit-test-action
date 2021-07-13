@@ -49,19 +49,19 @@ class Karma {
 	static getFileInfo(stack) {
 
 		// Matching on: `base/{filePath}:{lineNumber}:{columNumber}`
-		const matches = stack.match(/base\/.+\.test\.js.*\:\d+\:\d+/g);
+		const matches = stack.match(/base\/.+\.test\.js.*:\d+:\d+/g);
 
-		if (matches && matches.length === 1) {
+		if (matches && matches.length > 0) {
 			const match = matches[0];
 
 			// Using lookbehind (?<=foo) and lookahead (?=foo) to get file path and line number
 			return {
 				path: match.match(/(?<=base\/).+\.test\.js/g)[0],
-				line: parseInt(match.match(/(?<=\.test\.js.*\:)\d+/g)[0])
+				line: parseInt(match.match(/(?<=\.test\.js.*:)\d+/g)[0])
 			};
 		}
 		return {
-			path: 'package.json',
+			path: '',
 			line: 1
 		};
 	}
