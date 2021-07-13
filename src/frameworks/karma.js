@@ -19,7 +19,7 @@ class Karma {
 		const output = extractJSON(readFile(fileOutput), EXPECTED_ARGUMENTS);
 
 		const annotations = new Annotations({
-			numErrors: 0
+			numErrors: output.summary.failed
 		});
 
 		if (output && output.summary.failed > 0) {
@@ -34,7 +34,7 @@ class Karma {
 
 						annotations.annotations.push(new Annotation({
 							title: result.description,
-							message: `${result.suite.join('.')}: ${result.description} failed (${output.browsers[id].name}):\n\n${result.log.join('\n')}`,
+							message: `${result.suite.join('.')}: ${result.description} failed (${output.browsers[id].name})`,
 							path,
 							line
 						}));
@@ -61,7 +61,7 @@ class Karma {
 			};
 		}
 		return {
-			path: '',
+			path: 'package.json',
 			line: 1
 		};
 	}
