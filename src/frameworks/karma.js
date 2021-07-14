@@ -62,7 +62,7 @@ class Karma {
 			};
 		}
 		return {
-			path: '',
+			path: 'package.json',
 			line: 1
 		};
 	}
