@@ -1,6 +1,6 @@
 'use strict';
 
-const { readFile, extractJSON } = require('../helpers');
+const { Helpers } = require('../helpers');
 const { Annotations } = require('../annotations');
 const { Annotation } = require('../annotation');
 
@@ -17,7 +17,7 @@ class Mocha {
 	}
 
 	static parseTestResult(fileOutput) {
-		const output = extractJSON(readFile(fileOutput), EXPECTED_ARGUMENTS);
+		const output = Helpers.extractJSON(Helpers.readFile(fileOutput), EXPECTED_ARGUMENTS);
 
 		const annotations = new Annotations({
 			numErrors: output ? output.failures.length : 0
@@ -42,9 +42,15 @@ class Mocha {
 	static _getLineNumber(stack, fileName) {
 		const fileLocation = stack.indexOf(fileName);
 		const lineLocation = stack.indexOf(':', fileLocation + fileName.length) + 1;
-		const endLineLocation = stack.indexOf(':', fileLocation + fileName.length + 1);
 
-		return parseInt(stack.substring(lineLocation, endLineLocation));
+		if (lineLocation >= 0) {
+			// Find numbers starting from lineLocation
+			const results = stack.substring(lineLocation, stack.length).match(/\d+/);
+
+			return results ? parseInt(results[0]) : 1;
+		}
+
+		return 1;
 	}
 }
 

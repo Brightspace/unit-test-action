@@ -5,7 +5,7 @@ const exec = require('@actions/exec');
 
 const { TestFrameworkFactory } = require('./testFrameworkFactory');
 const { Checks } = require('./checks');
-const { getTestCommand } = require('./helpers');
+const { Helpers } = require('./helpers');
 
 const FILE_OUTPUT = 'output.json';
 
@@ -16,7 +16,7 @@ async function main() {
 
 		const framework = TestFrameworkFactory.getTestFramework(testType);
 
-		let testCommand = getTestCommand(testScript);
+		let testCommand = Helpers.getTestCommand(testScript);
 
 		testCommand = framework.updateTestCommand(testCommand, FILE_OUTPUT);
 
