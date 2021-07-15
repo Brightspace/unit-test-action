@@ -14,7 +14,6 @@ Add a workflow file to your repository using the following template.
 
 ### Replacements
 
-- `<Linux|Windows>`: The operating system which matches your build requirements
 - `<mocha>`: Currently we only support mocha
 - `<npm script command>`: The npm script to run, without the `npm run`. (Defaults to `test`)
 
@@ -27,18 +26,13 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, <Linux|Windows>, AWS]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
     - uses: Brightspace/third-party-actions@actions/checkout
-    - uses: Brightspace/third-party-actions@actions/checkout
+    - uses: Brightspace/unit-test-action@v0.0.1
       with:
-        repository: Brightspace/unit-test-action
-        path: .github/actions/unit-test-action
-        token: ${{ secrets.D2L_GITHUB_TOKEN }}
-    - uses: ./.github/actions/unit-test-action
-      with:
-        test-type: <mocha>
-        test-script: <npm script command>
+        test-type: <mocha> # Without the angle brackets
+        test-script: <npm script command> # Without the angle brackets
         token: ${{ secrets.GITHUB_TOKEN }}
 ```
