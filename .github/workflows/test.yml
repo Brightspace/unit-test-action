@@ -13,6 +13,8 @@ jobs:
             node-version: '14.x'
             registry-url: ${{ secrets.ARTIFACTORY_NPM_REGISTRY }}
             scope: '@d2l'
+      - name: Install Node Modules
+        run: npm ci
       - name: Run lint
         run: npm run lint
       - name: Run test
