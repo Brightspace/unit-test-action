@@ -1,21 +1,37 @@
 # unit-test-action
 
-This is a work in progress Inspiration project.
+This is a Github Action to run unit tests and display the failed tests in the `Files Changed` of PRs.
 
-## Goals
+This action is a work in progress, it has been worked on during an inspiration sprint. It is not a 
+completed project and has room for improvement.
 
-- Run unit tests for projects (using `npm test`)
-- Display failed tests as annotations to facilitate finding the cause of the errors
-- Accept different testing frameworks
+## In case of problems
+
+If the action does not work as expected or if it does not support a testing framework you would 
+like to use, please open up an issue and message Louis Coste.
+
+## Supported testing frameworks
+
+Currently the supported testing frameworks are:
+
+### Mocha
+
+### Karma
+
+In order to use this GtiHub Action with Karma you will need to add a package to your modules. 
+Make sure to add `"karma-json-reporter": "^1.1"` to your `devDependencies`.
+
+## Disclaimer
+
+This tool uses the npm scripts and modifies them slightly to be able to parse the results.
+
+The result is then parsed and it might not always contain the file location where errors happen.
 
 ## How to use
 
 Add a workflow file to your repository using the following template.
 
-### Replacements
-
-- `<Linux|Windows>`: The operating system which matches your build requirements
-- `<mocha>`: Currently we only support mocha
+- `<mocha|karma>`: Testing framework used in the `npm test` command
 - `<npm script command>`: The npm script to run, without the `npm run`. (Defaults to `test`)
 
 ```
@@ -27,18 +43,16 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, <Linux|Windows>, AWS]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
     - uses: Brightspace/third-party-actions@actions/checkout
-    - uses: Brightspace/third-party-actions@actions/checkout
+    - uses: Brightspace/unit-test-action@v1.0.0
       with:
-        repository: Brightspace/unit-test-action
-        path: .github/actions/unit-test-action
-        token: ${{ secrets.D2L_GITHUB_TOKEN }}
-    - uses: ./.github/actions/unit-test-action
-      with:
-        test-type: <mocha>
-        test-script: <npm script command>
+        test-type: <mocha|karma> # Without the angle brackets
+        test-script: <npm script command> # Without the angle brackets
         token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+If you are using the `karma` testing framework then you also need to add 
+`"karma-json-reporter": "^1.1"` to your `devDependencies`
