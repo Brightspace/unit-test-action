@@ -1,0 +1,16 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: Brightspace/third-party-actions@actions/checkout
+      - name: Semantic Release
+        uses: BrightspaceUI/actions/semantic-release@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.D2L_GITHUB_TOKEN }}

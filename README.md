@@ -56,3 +56,19 @@ jobs:
 
 If you are using the `karma` testing framework then you also need to add 
 `"karma-json-reporter": "^1.1"` to your `devDependencies`
+
+## Versioning, Releasing & Deploying
+
+All version changes should obey [semantic versioning](https://semver.org/) rules.
+
+This repo uses the [semantic-release](https://github.com/BrightspaceUI/actions/tree/master/semantic-release) GitHub action to manage GitHub releases. The commit message format for initiating releases is specified in that [semantic-release](https://github.com/BrightspaceUI/actions/tree/master/semantic-release) GitHub action.
+
+Supported commit prefixes:
+| Commit prefix        | Version Increase |
+| -------------------- | ---------------- |
+| `fix:`               | `PATCH`          |
+| `perf:`              | `PATCH`          |
+| `feat:`              | `MINOR`          |
+| `BREAKING CHANGE:`   | `MAJOR`          |
+
+Example commit: `feat: Adding error page` will increment the `MINOR` version.
