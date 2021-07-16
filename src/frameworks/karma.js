@@ -1,6 +1,6 @@
 'use strict';
 
-const { readFile, extractJSON } = require('../helpers');
+const { Helpers } = require('../helpers');
 const { Annotations } = require('../annotations');
 const { Annotation } = require('../annotation');
 
@@ -16,7 +16,7 @@ class Karma {
 	}
 
 	static parseTestResult(fileOutput) {
-		const output = extractJSON(readFile(fileOutput), EXPECTED_ARGUMENTS);
+		const output = Helpers.extractJSON(Helpers.readFile(fileOutput), EXPECTED_ARGUMENTS);
 
 		const annotations = new Annotations({
 			numErrors: output.summary.failed
@@ -30,7 +30,7 @@ class Karma {
 
 					if (!result.success) {
 						const logs = result.log.join('\n');
-						const { path, line } = Karma.getFileInfo(logs);
+						const { path, line } = Karma._getFileInfo(logs);
 						const title = `${result.description} (${output.browsers[id].name})`;
 
 						annotations.annotations.push(new Annotation({
@@ -47,10 +47,10 @@ class Karma {
 		return annotations;
 	}
 
-	static getFileInfo(stack) {
+	static _getFileInfo(stack) {
 
-		// Matching on: `base/{filePath}:{lineNumber}:{columNumber}`
-		const matches = stack.match(/base\/.+\.test\.js.*:\d+:\d+/g);
+		// Matching on: `base/{filePath}:{lineNumber}`
+		const matches = stack.match(/base\/.+\.test\.js.*:\d+/g);
 
 		if (matches && matches.length > 0) {
 			const match = matches[0];

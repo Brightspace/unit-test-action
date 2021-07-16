@@ -1,4 +1,4 @@
-name: lint
+name: Test
 on: pull_request
 
 jobs:
@@ -17,3 +17,8 @@ jobs:
         run: npm ci
       - name: Run lint
         run: npm run lint
+      - name: Run test
+        uses: ./
+        with:
+          test-type: mocha
+          token: ${{ secrets.GITHUB_TOKEN }}
