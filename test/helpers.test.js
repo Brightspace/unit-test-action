@@ -6,14 +6,14 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 describe('Helper functions', () => {
-	describe('hasProperties', () => {
+	describe('hasAllProperties', () => {
 		it('Returns true when it has only the properties passed', () => {
 			const obj = {
 				field1: 'test1',
 				field2: 'test2'
 			};
 
-			expect(Helpers.hasProperties(obj, ['field1', 'field2'])).to.be.true;
+			expect(Helpers.hasAllProperties(obj, ['field1', 'field2'])).to.be.true;
 		});
 
 		it('Returns true when it has the properties passed and some other', () => {
@@ -23,7 +23,7 @@ describe('Helper functions', () => {
 				field3: 'test3'
 			};
 
-			expect(Helpers.hasProperties(obj, ['field1', 'field2'])).to.be.true;
+			expect(Helpers.hasAllProperties(obj, ['field1', 'field2'])).to.be.true;
 		});
 
 		it('Returns true when no properties checked', () => {
@@ -32,7 +32,7 @@ describe('Helper functions', () => {
 				field2: 'test2'
 			};
 
-			expect(Helpers.hasProperties(obj, [])).to.be.true;
+			expect(Helpers.hasAllProperties(obj, [])).to.be.true;
 		});
 
 		it('Returns false when it is missing some properties', () => {
@@ -41,7 +41,7 @@ describe('Helper functions', () => {
 				field2: 'test2'
 			};
 
-			expect(Helpers.hasProperties(obj, ['field1', 'field2', 'field3'])).to.be.false;
+			expect(Helpers.hasAllProperties(obj, ['field1', 'field2', 'field3'])).to.be.false;
 		});
 
 		it('Returns false when there are none of the properties', () => {
@@ -50,7 +50,7 @@ describe('Helper functions', () => {
 				fake2: 'test2'
 			};
 
-			expect(Helpers.hasProperties(obj, ['field1', 'field2'])).to.be.false;
+			expect(Helpers.hasAllProperties(obj, ['field1', 'field2'])).to.be.false;
 		});
 	});
 });

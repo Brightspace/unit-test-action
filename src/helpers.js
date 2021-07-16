@@ -7,7 +7,7 @@ class Helpers {
 		return fs.readFileSync(file, 'utf8');
 	}
 
-	static hasProperties(obj, properties) {
+	static hasAllProperties(obj, properties) {
 		let hasProperty = true;
 
 		properties.forEach(property => {
@@ -36,7 +36,7 @@ class Helpers {
 				try {
 					var res = JSON.parse(candidate);
 
-					if (Helpers.hasProperties(res, properties)) {
+					if (Helpers.hasAllProperties(res, properties)) {
 						return res;
 					}
 				}
