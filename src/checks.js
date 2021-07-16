@@ -5,7 +5,6 @@ const github = require('@actions/github');
 
 class Checks {
 	static async writeAnnotations(annotations) {
-		console.log(github.context);
 		const [owner, repo] = github.context.payload.repository.full_name.split('/');
 		const sha = github.context.payload.after;
 		const token = core.getInput('token');
