@@ -4,7 +4,7 @@ const { Helpers } = require('../helpers');
 const { Annotations } = require('../annotations');
 const { Annotation } = require('../annotation');
 
-const EXPECTED_ARGUMENTS = ['stats', 'test', 'pending', 'failures', 'passes'];
+const EXPECTED_ARGUMENTS = ['stats', 'tests', 'pending', 'failures', 'passes'];
 
 class Mocha {
 
