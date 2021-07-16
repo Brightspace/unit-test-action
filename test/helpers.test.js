@@ -97,7 +97,7 @@ describe('Extract JSON', () => {
 	it('Returns null when there is no json', () => {
 		const text = 'Just text';
 
-		expect(Helpers.extractJSON(text)).to.deep.equal(null);
+		expect(Helpers.extractJSON(text)).to.equal(null);
 	});
 
 	it('Returns null when there is no valid JSON', () => {
