@@ -47,7 +47,7 @@ jobs:
     timeout-minutes: 10
     steps:
     - uses: Brightspace/third-party-actions@actions/checkout
-    - uses: Brightspace/unit-test-action@v1.0.0
+    - uses: Brightspace/unit-test-action@v1.0.1
       with:
         test-type: <mocha|karma> # Without the angle brackets
         test-script: <npm script command> # Without the angle brackets
