@@ -14,6 +14,6 @@ inputs:
     required: true
 
 runs:
-  using: 'node12'
+  using: 'node14'
   pre: 'setup.js'
   main: 'src/main.js'
