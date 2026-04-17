@@ -10,7 +10,7 @@ jobs:
       - name: Setup Node
         uses: Brightspace/setup-node@main
         with:
-            node-version: '14.x'
+            node-version: '24.x'
             registry-url: ${{ secrets.ARTIFACTORY_NPM_REGISTRY }}
             scope: '@d2l'
       - name: Install Node Modules
