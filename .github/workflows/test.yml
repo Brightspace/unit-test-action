@@ -11,6 +11,7 @@ jobs:
         uses: Brightspace/setup-node@main
         with:
             node-version: '14.x'
+            d2l-registry-token: ${{ secrets.D2L_PACKAGE_REGISTRY_AUTH_TOKEN }}
       - name: Install Node Modules
         run: npm ci
       - name: Run lint
